@@ -19,9 +19,8 @@ pipeline {
             steps {
                 // git branch: "main", url: "http://localhost:8929/PoowadolDev/ecommerce.git"
                 script {
-                    sh """
-                    pwd
-                    ls -la
+                    bash """
+                    dir
                     git clone http://localhost:8929/PoowadolDev/ecommerce.git 
                     cd ..
                     cd back-end
