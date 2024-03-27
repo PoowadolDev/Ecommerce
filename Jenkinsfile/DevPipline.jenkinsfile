@@ -23,7 +23,6 @@ pipeline {
                     dir
                     cd back-end
                     docker build -t golang-backend .
-                    docker run -d -p 8080:8080 golang-backend
                     """
                 }
 
