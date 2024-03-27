@@ -23,6 +23,7 @@ pipeline {
                     dir
                     cd back-end
                     docker build -t golang-backend .
+                    docker pull 
                     """
                 }
 
@@ -32,11 +33,9 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 script {
-                        def scannerHome = tool 'SonarScanner 5.0.1'; 
-                            withSonarQubeEnv('http://localhost:9000/') 
-                                {
-                                bat "${scannerHome}/bin/sonar-scanner"
-                                }
+                        withSonarQubeEnv(installationName: 'SonarQ') {
+                            bat "./mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
+                        }
                         }
                 
                     }
