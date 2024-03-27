@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                             withSonarQubeEnv(installationName: 'SonarQ') {
-                                bat "sonarsource/sonar-scanner-cli"
+                                bat "mvn clean package sonar:sonar"
                             }
                         }
                 
