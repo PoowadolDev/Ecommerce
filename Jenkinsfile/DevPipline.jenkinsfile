@@ -34,9 +34,11 @@ pipeline {
                 script {
                             withSonarQubeEnv(installationName: 'SonarQ') {
                                 bat """
-                                dir
-                                mvn clean package sonar:sonar
-                                """
+                                    sonar-scanner.bat \
+                                    -Dsonar.projectKey=jk-
+                                    -Dsonar.projectName=Ecommerce
+                                    -Dsonar.sources=.
+                                    """
                             }
                         }
                 
