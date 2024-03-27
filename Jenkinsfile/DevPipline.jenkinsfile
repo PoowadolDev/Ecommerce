@@ -32,9 +32,9 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 script {
-                        withSonarQubeEnv(installationName: 'SonarQ') {
-                            bat "./mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
-                        }
+                            withSonarQubeEnv(installationName: 'SonarQ') {
+                                bat "http://192.168.1.40:9000/bin/sonar-scanner"
+                            }
                         }
                 
                     }
