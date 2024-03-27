@@ -20,9 +20,9 @@ pipeline {
                 // git branch: "main", url: "http://localhost:8929/PoowadolDev/ecommerce.git"
                 script {
                     sh """
-                    git clone http://localhost:8929/PoowadolDev/ecommerce.git 
                     pwd
                     ls -la
+                    git clone http://localhost:8929/PoowadolDev/ecommerce.git 
                     cd ..
                     cd back-end
                     docker build -t golang-backend .
