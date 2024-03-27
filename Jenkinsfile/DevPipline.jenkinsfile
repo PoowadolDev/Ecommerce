@@ -18,8 +18,8 @@ pipeline {
         stage('Build Go') {
             steps {
                 git branch: "main", url: "http://localhost:8929/PoowadolDev/ecommerce.git"
-
-                sh """
+                script {
+                    sh """
                     pwd
                     ls -la
                     cd ..
@@ -27,6 +27,8 @@ pipeline {
                     docker build -t golang-backend .
                     docker run -d -p 8080:8080 golang-backend
                     """
+                }
+
             }
         }
     }
