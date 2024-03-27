@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+
+// pipline {
+//     agent any
+
+//     stages {
+//         stage("Build Go") {
+//             steps {
+//                 git brach: "main", url: "http://localhost:8929/PoowadolDev/ecommerce.git"
+
+//                 sh """
+//                     cd ..
+//                     cd back-end
+//                     docker build -t golang-backend .
+//                     docker run -d -p 8080:8080 golang-backend
+//                     """
+//             }
+//         }
+//     }
+// }
