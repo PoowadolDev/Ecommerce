@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Build Go') {
             steps {
-                git brach: "main", url: "http://localhost:8929/PoowadolDev/ecommerce.git"
+                git branch: "main", url: "http://localhost:8929/PoowadolDev/ecommerce.git"
 
                 sh """
                     cd ..
