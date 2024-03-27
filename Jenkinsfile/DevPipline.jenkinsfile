@@ -23,7 +23,6 @@ pipeline {
                     dir
                     cd back-end
                     docker build -t golang-backend .
-                    docker pull 
                     """
                 }
 
