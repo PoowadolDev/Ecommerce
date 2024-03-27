@@ -28,5 +28,14 @@ pipeline {
 
             }
         }
+
+        stage('SonarQube analysis') {
+            def scannerHome = tool 'SonarScanner 4.0';
+            withSonarQubeEnv('http://localhost:9000/') { // If you have configured more than one global server connection, you can specify its name
+            script {
+                bat "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
     }
 }
