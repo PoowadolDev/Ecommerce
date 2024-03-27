@@ -21,8 +21,6 @@ pipeline {
                 script {
                     bat """
                     dir
-                    git clone http://localhost:8929/PoowadolDev/ecommerce.git 
-                    cd ..
                     cd back-end
                     docker build -t golang-backend .
                     docker run -d -p 8080:8080 golang-backend
