@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 	"gitlab.com/PoowadolDev/Ecommerce.git/adapters/api"
 	"gitlab.com/PoowadolDev/Ecommerce.git/adapters/db"
 	"gitlab.com/PoowadolDev/Ecommerce.git/domain/entity"
@@ -16,18 +18,27 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-const (
-	host     = "192.168.1.40"
-	port     = 5432
-	user     = "myuser"
-	password = "mypassword"
-	dbname   = "mydatabase"
-)
-
 func main() {
 	app := fiber.New()
 
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s  sslmode=disable", host, port, user, password, dbname)
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file:", err)
+		return
+	}
+	// Database Config
+	db_host := os.Getenv("host")
+	db_port := os.Getenv("port")
+	db_user := os.Getenv("user")
+	db_password := os.Getenv("password")
+	db_dbname := os.Getenv("dbname")
+
+	port, err := strconv.Atoi(db_port)
+	if err != nil {
+		fmt.Println("Error converting string to int:", err)
+	}
+
+	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s  sslmode=disable", db_host, port, db_user, db_password, db_dbname)
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
@@ -53,6 +64,7 @@ func main() {
 	userHandler := api.NewUserHandler(userService)
 
 	app.Post("/register", userHandler.CreateUser)
+	app.Post("/login", userHandler.LoginUser)
 
 	app.Listen(":8000")
 }

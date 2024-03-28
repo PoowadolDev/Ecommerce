@@ -20,3 +20,11 @@ func (g *GormUserRepo) Save(user entity.User) error {
 	}
 	return nil
 }
+
+func (g *GormUserRepo) GetByEmail(user entity.User) (entity.User, error) {
+	var result entity.User
+	if err := g.db.Where("email = ?", user.Email).First(&result).Error; err != nil {
+		return entity.User{}, err
+	}
+	return result, nil
+}

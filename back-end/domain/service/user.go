@@ -1,6 +1,10 @@
 package service
 
 import (
+	"os"
+	"time"
+
+	"github.com/golang-jwt/jwt/v4"
 	"gitlab.com/PoowadolDev/Ecommerce.git/domain/entity"
 	"gitlab.com/PoowadolDev/Ecommerce.git/domain/repository"
 	"golang.org/x/crypto/bcrypt"
@@ -8,6 +12,7 @@ import (
 
 type UserService interface {
 	CreateUser(user entity.User) error
+	LoginUser(user entity.User) (string, error)
 }
 
 type UserServiceImpl struct {
@@ -32,4 +37,31 @@ func (s *UserServiceImpl) CreateUser(user entity.User) error {
 		return err
 	}
 	return nil
+}
+
+func (s *UserServiceImpl) LoginUser(user entity.User) (string, error) {
+
+	UserFound, err := s.repo.GetByEmail(user)
+	if err != nil {
+		return "", err
+	}
+
+	errs := bcrypt.CompareHashAndPassword([]byte(UserFound.Password), []byte(user.Password))
+
+	if errs != nil {
+		return "", errs
+	}
+
+	jwtSecretKey := os.Getenv("JWT_SECRET")
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["user_id"] = user.ID
+	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+
+	t, err := token.SignedString([]byte(jwtSecretKey))
+	if err != nil {
+		return "", err
+	}
+
+	return t, nil
 }
