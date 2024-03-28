@@ -27,18 +27,18 @@ func main() {
 		return
 	}
 	// Database Config
-	db_host := os.Getenv("host")
-	db_port := os.Getenv("port")
-	db_user := os.Getenv("user")
-	db_password := os.Getenv("password")
-	db_dbname := os.Getenv("dbname")
+	dbhost := os.Getenv("host")
+	dbport := os.Getenv("port")
+	dbuser := os.Getenv("user")
+	dbpassword := os.Getenv("password")
+	dbname := os.Getenv("dbname")
 
-	port, err := strconv.Atoi(db_port)
+	port, err := strconv.Atoi(dbport)
 	if err != nil {
 		fmt.Println("Error converting string to int:", err)
 	}
 
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s  sslmode=disable", db_host, port, db_user, db_password, db_dbname)
+	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s  sslmode=disable", dbhost, port, dbuser, dbpassword, dbname)
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
