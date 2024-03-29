@@ -1,0 +1,49 @@
+// pipeline {
+//     agent any
+
+//     stages {
+//         stage('Hello') {
+//             steps {
+//                 echo 'Hello World'
+//             }
+//         }
+//     }
+// }
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Go') {
+            steps {
+                // git branch: "main", url: "http://localhost:8929/PoowadolDev/ecommerce.git"
+                script {
+                    bat """
+                    dir
+                    cd back-end
+                    docker build -t golang-backend .
+                    """
+                }
+
+            }
+        }
+
+        stage('SonarQube analysis') {
+            steps {
+                script {
+                            withSonarQubeEnv(installationName: 'SonarQ') {
+                                bat """
+                                    sonar-scanner.bat \
+                                    -Dsonar.projectKey=jk-
+                                    -Dsonar.projectName=Ecommerce
+                                    -Dsonar.sources=.
+                                    """
+                            }
+                        }
+                
+                    }
+
+        }
+    }
+}
