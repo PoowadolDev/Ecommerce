@@ -35,7 +35,7 @@ pipeline {
                             withSonarQubeEnv(installationName: 'SonarQ') {
                                 bat """
                                     sonar-scanner.bat \
-                                    -Dsonar.projectKey=jk-
+                                    -Dsonar.projectKey=Ecommerce-jk
                                     -Dsonar.projectName=Ecommerce
                                     -Dsonar.sources=.
                                     """
