@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"gitlab.com/PoowadolDev/Ecommerce.git/adapters/api"
 	"gitlab.com/PoowadolDev/Ecommerce.git/adapters/db"
@@ -56,8 +57,14 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://0.0.0.0:3000, http://0.0.0.0:8000",
+		AllowCredentials: true,
+	}))
 
 	database.AutoMigrate(&entity.User{})
+
+	app.Get("/auth", api.CheckAuth)
 
 	userRepo := db.NewGormUserRepository(database)
 	userService := service.NewUserService(userRepo)
@@ -68,3 +75,18 @@ func main() {
 
 	app.Listen(":8000")
 }
+
+// func auth(c *fiber.Ctx) error {
+// 	cookie := c.Cookies("jwt")
+
+// 	jwtSecretKey := os.Getenv("JWT_SECRET")
+// 	token, err := jwt.ParseWithClaims(cookie, jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {
+// 		return []byte(jwtSecretKey), nil
+// 	})
+
+// 	if err != nil || !token.Valid {
+// 		return err
+// 	}
+
+// 	return nil
+// }

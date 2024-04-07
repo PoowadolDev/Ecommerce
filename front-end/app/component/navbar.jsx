@@ -3,11 +3,12 @@
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IconContext } from "react-icons";
 import  Link  from "next/link";
-export default function Navbar() {
+
+export default function Navbar({ loginStatus }) {
     return (
-        <div className="bg-base-300 z-50">
+        <div className="fixed w-full bg-base-300 z-50 drop-shadow-2xl">
             <div className="drawer px-56">
-                <input id="my-drawer-3" type="checkbox" className="drawer-toggle" /> 
+                <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col">
                     {/* Navbar */}
                     <div className="w-full navbar">
@@ -15,8 +16,8 @@ export default function Navbar() {
                         <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square btn-ghost">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                         </label>
-                    </div> 
-                    <div className="flex-1 px-2 mx-2">                                
+                    </div>
+                    <div className="flex-1 px-2 mx-2">
                         <Link href="/">
                         MERN Store
                         </Link>
@@ -33,8 +34,8 @@ export default function Navbar() {
                                         <label htmlFor="my-drawer-4" className="m-0">
                                                 <HiOutlineShoppingBag className="w-5 h-5"/>
                                         </label>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
                                 <div className="drawer-side z-50">
                                     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
                                     <div className="p-4 w-80 min-h-full bg-base-200 text-base-content">
@@ -44,11 +45,11 @@ export default function Navbar() {
                                 </div>
                             </li>
                             <li>
-                                <details>
+                                {/* <details>
                                 <summary>
                                     Brands
                                 </summary>
-                                <ul className="p-2 bg-base-100 top-4 right-0 z-50 drop-shadow-2xl">
+                                <ul className="dropdown-content  p-2 bg-base-100 top-4 right-0 z-50 drop-shadow-2xl">
                                    <div className="grid grid-cols">
                                         <div className="col-span-1">
                                             SHOP BY BRAND
@@ -58,31 +59,63 @@ export default function Navbar() {
                                         </div>
                                    </div>
                                 </ul>
-                                </details>
+                                </details> */}
+                                <div className="dropdown dropdown-bottom dropdown-end">
+                                    <div tabIndex={0} role="button" >
+                                    <summary>
+                                    Brands
+                                </summary>
+                                    </div>
+                                    <ul tabIndex={0} className="dropdown-content z-50 menu p-2  shadow bg-base-100 rounded-box w-52">
+                                        <li><a>Item 1</a></li>
+                                        <li><a>Item 2</a></li>
+                                    </ul>
+                                </div>
                             </li>
-                            
                             <li>
                                 <Link href="/shop">
                                     Shop
                                 </Link>
                             </li>
-                            
+                            {
+                                loginStatus?
+                                <li>
+                                    <details>
+                                    <summary>
+                                        Account
+                                    </summary>
+                                    <ul className="p-2 bg-base-100 rounded-2 z-50 top-4 drop-shadow-2xl">
+                                        <li>
+                                            <Link href="/login">
+                                                Sign In
+                                            </Link>
+                                        </li>
+                                        <li><a>Sign Up</a></li>
+                                    </ul>
+                                    </details>
+                                </li>
+                                :
+                                <li>
+                                    <details>
+                                    <summary>
+                                        Welcome!
+                                    </summary>
+                                    <ul className="p-2 bg-base-100 rounded-2 z-50 top-4 drop-shadow-2xl">
+                                        <li>
+                                            <Link href="/login">
+                                                Sign In
+                                            </Link>
+                                        </li>
+                                        <li><a>Sign Up</a></li>
+                                    </ul>
+                                    </details>
+                                </li>
+                            }
 
-                            <li>
-                                <details>
-                                <summary>
-                                    Welcome!
-                                </summary>
-                                <ul className="p-2 bg-base-100 rounded-2 z-50 top-4 drop-shadow-2xl">
-                                    <li><a>Login</a></li>
-                                    <li><a>Sign Up</a></li>
-                                </ul>
-                                </details>
-                            </li>
                         </ul>
                     </div>
                     </div>
-                </div> 
+                </div>
                 <div className="drawer-side z-50">
                     <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label> 
                     <button className="btn btn-square">
@@ -99,6 +132,5 @@ export default function Navbar() {
                 </div>
             </div>
         </div>
-        
     )
 }

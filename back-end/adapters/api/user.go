@@ -51,14 +51,16 @@ func (h *UserHandler) LoginUser(c *fiber.Ctx) error {
 	}
 
 	c.Cookie(&fiber.Cookie{
-		Name:     "jwt",
+		Name:     "jwt_token",
 		Value:    token,
+		Path:     "/",
 		Expires:  time.Now().Add(time.Hour * 72),
 		HTTPOnly: true,
+		SameSite: "Lax",
+		Secure:   true,
 	})
 
 	return c.JSON(fiber.Map{
 		"message": "Login Success",
-		"token":   token,
 	})
 }
