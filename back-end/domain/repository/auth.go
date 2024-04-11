@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 )
 
 type AuthRepo interface {

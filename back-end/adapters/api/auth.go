@@ -8,7 +8,7 @@ import (
 )
 
 func CheckAuth(c *fiber.Ctx) error {
-	cookie := c.Cookies("jwt")
+	cookie := c.Cookies("jwt_token")
 
 	jwtSecretKey := os.Getenv("JWT_SECRET")
 	token, err := jwt.ParseWithClaims(cookie, jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {

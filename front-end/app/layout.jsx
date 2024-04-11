@@ -4,6 +4,7 @@ import Footer from "./component/footer";
 import axios from 'axios';
 
 import "./globals.css";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,9 @@ export const metadata = {
 
 async function fetchData(backend_url) {
   try {
-    const response = await axios.get(`${backend_url}/auth`);
+    const response = await axios.get(`${backend_url}/auth`,{
+      withCredentials: true
+    });
     const data = response.data;
     return data; // Return the fetched data
   } catch (error) {
@@ -26,12 +29,14 @@ export default async function RootLayout({ children }) {
 
   const backendUrl = process.env.BACKEND_URL;
   const response = await fetchData(backendUrl)
-
+  console.log(cookies().get("jwt_token"))
   let status = response['message']
 
+  console.log(status)
 
-  return (
-    <html className="static" lang="en">
+
+return (
+  <html className="static" lang="en">
       <body className="flex flex-col h-svh">
             <Navbar loginStatus={status}/>
             <div className="mt-20">
