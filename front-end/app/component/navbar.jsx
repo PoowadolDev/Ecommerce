@@ -1,10 +1,12 @@
 'use client'
 
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { IconContext } from "react-icons";
 import  Link  from "next/link";
 
-export default function Navbar({ loginStatus }) {
+import DDAccount from "./ddaccount";
+
+export default function Navbar() {
+
     return (
         <div className="fixed w-full bg-base-300 z-50 drop-shadow-2xl">
             <div className="drawer px-56">
@@ -45,21 +47,6 @@ export default function Navbar({ loginStatus }) {
                                 </div>
                             </li>
                             <li>
-                                {/* <details>
-                                <summary>
-                                    Brands
-                                </summary>
-                                <ul className="dropdown-content  p-2 bg-base-100 top-4 right-0 z-50 drop-shadow-2xl">
-                                   <div className="grid grid-cols">
-                                        <div className="col-span-1">
-                                            SHOP BY BRAND
-                                        </div>
-                                        <div className="col-span-3">
-                                            SEE All
-                                        </div>
-                                   </div>
-                                </ul>
-                                </details> */}
                                 <div className="dropdown dropdown-bottom dropdown-end">
                                     <div tabIndex={0} role="button" >
                                     <summary>
@@ -77,47 +64,13 @@ export default function Navbar({ loginStatus }) {
                                     Shop
                                 </Link>
                             </li>
-                            {
-                                loginStatus?
-                                <li>
-                                    <details>
-                                    <summary>
-                                        Account
-                                    </summary>
-                                    <ul className="p-2 bg-base-100 rounded-2 z-50 top-4 drop-shadow-2xl">
-                                        <li>
-                                            <Link href="/login">
-                                                Sign In
-                                            </Link>
-                                        </li>
-                                        <li><a>Sign Up</a></li>
-                                    </ul>
-                                    </details>
-                                </li>
-                                :
-                                <li>
-                                    <details>
-                                    <summary>
-                                        Welcome!
-                                    </summary>
-                                    <ul className="p-2 bg-base-100 rounded-2 z-50 top-4 drop-shadow-2xl">
-                                        <li>
-                                            <Link href="/login">
-                                                Sign In
-                                            </Link>
-                                        </li>
-                                        <li><a>Sign Up</a></li>
-                                    </ul>
-                                    </details>
-                                </li>
-                            }
-
+                            <DDAccount/>
                         </ul>
                     </div>
                     </div>
                 </div>
                 <div className="drawer-side z-50">
-                    <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label> 
+                    <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
                     <button className="btn btn-square">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>

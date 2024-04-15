@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,6 +10,7 @@ import (
 
 func CheckAuth(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt_token")
+	fmt.Printf("Cookies : %s\n", cookie)
 
 	jwtSecretKey := os.Getenv("JWT_SECRET")
 	token, err := jwt.ParseWithClaims(cookie, jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {

@@ -2,19 +2,19 @@ export default function Footer() {
     return (
     <footer className="bottom-0 divide-x flex grow-0 self-end shrink-0 mt-auto footer p-10  bg-neutral text-neutral-content justify-around">
       <nav>
-        <h6 className="footer-title">CUSTOMER SERVICE</h6> 
+        <h6 className="footer-title">CUSTOMER SERVICE</h6>
         <a className="link link-hover">Contact Us</a>
         <a className="link link-hover">Sell With Us</a>
         <a className="link link-hover">Shipping</a>
-      </nav> 
+      </nav>
       <nav className="px-10">
-        <h6 className="footer-title">LINKS</h6> 
+        <h6 className="footer-title">LINKS</h6>
         <a className="link link-hover">Contact Us</a>
         <a className="link link-hover">Sell With Us</a>
         <a className="link link-hover">Shipping</a>
-      </nav> 
+      </nav>
       <nav className="px-10">
-        <h6 className="footer-title">NEWSLETTER</h6> 
+        <h6 className="footer-title">NEWSLETTER</h6>
         <a className="link link-hover">Terms of use</a>
       </nav>
     </footer>

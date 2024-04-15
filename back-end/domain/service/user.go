@@ -12,7 +12,7 @@ import (
 
 type UserService interface {
 	CreateUser(user entity.User) error
-	LoginUser(user entity.User) (string, error)
+	LoginUser(user entity.User) (string, string, error)
 }
 
 type UserServiceImpl struct {
@@ -39,17 +39,21 @@ func (s *UserServiceImpl) CreateUser(user entity.User) error {
 	return nil
 }
 
-func (s *UserServiceImpl) LoginUser(user entity.User) (string, error) {
+func (s *UserServiceImpl) LoginUser(user entity.User) (string, string, error) {
 
 	UserFound, err := s.repo.GetByEmail(user)
 	if err != nil {
-		return "", err
+		return "", "", err
+	}
+
+	if UserFound == (entity.User{}) {
+		return "", "User not found", err
 	}
 
 	errs := bcrypt.CompareHashAndPassword([]byte(UserFound.Password), []byte(user.Password))
 
 	if errs != nil {
-		return "", errs
+		return "", "Password not match", errs
 	}
 
 	jwtSecretKey := os.Getenv("JWT_SECRET")
@@ -60,8 +64,8 @@ func (s *UserServiceImpl) LoginUser(user entity.User) (string, error) {
 
 	t, err := token.SignedString([]byte(jwtSecretKey))
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
-	return t, nil
+	return t, "Login Success", nil
 }

@@ -28,13 +28,21 @@ func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 		})
 	}
 
-	if err := h.userService.CreateUser(user); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": err.Error(),
+	if user.Name == "" || user.Email == "" || user.Password == "" {
+		return c.JSON(fiber.Map{
+			"message": "All fields are required",
 		})
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(user)
+	if err := h.userService.CreateUser(user); err != nil {
+		return c.JSON(fiber.Map{
+			"message": "Already exists",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"message": "Create Success",
+	})
 }
 
 func (h *UserHandler) LoginUser(c *fiber.Ctx) error {
@@ -44,10 +52,18 @@ func (h *UserHandler) LoginUser(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	token, err := h.userService.LoginUser(user)
+	token, status, err := h.userService.LoginUser(user)
+
+	if status != "Login Success" {
+		c.JSON(fiber.Map{
+			"message": status,
+		})
+	}
 
 	if err != nil {
-		return c.SendStatus(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": status,
+		})
 	}
 
 	c.Cookie(&fiber.Cookie{
@@ -56,11 +72,18 @@ func (h *UserHandler) LoginUser(c *fiber.Ctx) error {
 		Expires:  time.Now().Add(time.Hour * 72),
 		HTTPOnly: true,
 		Secure:   false,
-		SameSite: "None",
+		SameSite: "Lax",
 	})
 
 	return c.JSON(fiber.Map{
-		"message": "Login Success",
-		"token":   token,
+		"message": status,
+	})
+}
+
+func (h *UserHandler) SignOutUser(c *fiber.Ctx) error {
+	c.ClearCookie("jwt_token")
+
+	return c.JSON(fiber.Map{
+		"message": "Logout Success",
 	})
 }
