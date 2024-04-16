@@ -10,7 +10,6 @@ async function useAPIMethodPost(url, data) {
   return axios.post(`${backend_url}${url}`, data, {
           withCredentials: true
         }).then( (response) => {
-          console.log(response.data)
           return response
       })
 }

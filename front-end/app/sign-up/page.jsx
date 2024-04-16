@@ -9,12 +9,20 @@ export default function SignUp() {
         message : ''
     }
 
-    const [state, formAction, isLoading] = useFormState(ActionSignUp, initState)
+    const [state, formAction] = useFormState(ActionSignUp, initState)
 
-    // console.log(`Log on Sign Up : ${state.message}`)
+    console.log(`Log on Sign Up : ${state.message}`)
 
     return (
         <div className="h-dvh w-full py-10 px-24 shadow-2xl">
+            <div className="toast toast-top toast-end top-20" id='AlertSignUp'>
+                <div className="alert alert-info">
+                    <span>New mail arrived.</span>
+                    <button className="btn btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
             <div className="border-2 border-slate-200 h-full w-full rounded-3xl bg-white px-10 py-16">
                 <div className="grid grid-flow-col-dense grid-cols-2 h-full w-full ">
                     <div className="">
@@ -22,7 +30,7 @@ export default function SignUp() {
                             <div className="text-black font-sans subpixel-antialiased font-bold text-6xl text-center my-5 bg-white">
                                 Sign Up
                             </div>
-                            <form action={formAction} isLoading={isLoading} className="text-center object-center bg-white">
+                            <form action={formAction} className="text-center object-center bg-white">
                                 <label className="input input-bordered flex items-center gap-2 input-lg w-full mb-12 mt-20 shadow-2xl">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70 "><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" /><path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" /></svg>
                                     <input type="text" name="username" className="grow" placeholder="Username"/>
