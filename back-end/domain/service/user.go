@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"os"
 	"time"
 
@@ -8,6 +9,7 @@ import (
 	"gitlab.com/PoowadolDev/Ecommerce.git/domain/entity"
 	"gitlab.com/PoowadolDev/Ecommerce.git/domain/repository"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type UserService interface {
@@ -42,18 +44,19 @@ func (s *UserServiceImpl) CreateUser(user entity.User) error {
 func (s *UserServiceImpl) LoginUser(user entity.User) (string, string, error) {
 
 	UserFound, err := s.repo.GetByEmail(user)
-	if err != nil {
-		return "", "", err
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return "", "No account exists for the email you entered.", err
 	}
 
-	if UserFound == (entity.User{}) {
-		return "", "User not found", err
+	if err != nil {
+		return "", "", err
 	}
 
 	errs := bcrypt.CompareHashAndPassword([]byte(UserFound.Password), []byte(user.Password))
 
 	if errs != nil {
-		return "", "Password not match", errs
+		return "", "The passwords you entered do not match", errs
 	}
 
 	jwtSecretKey := os.Getenv("JWT_SECRET")

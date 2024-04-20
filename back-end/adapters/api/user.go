@@ -36,12 +36,12 @@ func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 
 	if err := h.userService.CreateUser(user); err != nil {
 		return c.JSON(fiber.Map{
-			"message": "Already exists",
+			"message": "The email address you entered is already associated with an existing account.",
 		})
 	}
 
 	return c.JSON(fiber.Map{
-		"message": "Create Success",
+		"message": "Your new account has been created successfully",
 	})
 }
 

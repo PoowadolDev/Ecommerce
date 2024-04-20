@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        'charcoal-black' : '#36454F',
+      },
     },
   },
   plugins: [require("daisyui")],

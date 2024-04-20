@@ -17,8 +17,6 @@ export default function DDAccount() {
         callapi()
     }, [res])
 
-    // const { data, isLoading, error } =  useApi('/auth', 'GET');
-    // console.log(data)
     console.log("status", res)
     if (!res) {
         return (
